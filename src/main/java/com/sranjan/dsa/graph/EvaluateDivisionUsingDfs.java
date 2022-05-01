@@ -3,26 +3,31 @@ package com.sranjan.dsa.graph;
 import java.util.*;
 
 public class EvaluateDivisionUsingDfs {
-    private final Map<String, Map<String, Double>> map = new HashMap<>();
+    private Map<String, Map<String, Double>> map;
 
-    public double[] calcEquation(String[][] equations, double[] values, String[][] queries) {
-        for(int i = 0; i < equations.length; i++) {
-            String x = equations[i][0];
-            String y = equations[i][1];
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+        map = buildGraph(equations, values);
+        double[] result = new double[queries.size()];
+        for(int i = 0; i < queries.size(); i++) {
+            if(!map.containsKey(queries.get(i).get(0)) || !map.containsKey(queries.get(i).get(1))) result[i] = -1.0;
+            else result[i] = dfs(queries.get(i).get(0), queries.get(i).get(1), new HashSet<String>());
+        }
+        return result;
+    }
+    private Map<String, Map<String, Double>> buildGraph(List<List<String>> equations, double[] values) {
+        for(int i = 0; i < equations.size(); i++) {
+            String x = equations.get(i).get(0);
+            String y = equations.get(i).get(1);
             double value = values[i];
             map.putIfAbsent(x, new HashMap<String, Double>());
             map.putIfAbsent(y, new HashMap<String, Double>());
             map.get(x).put(y, value);
             map.get(y).put(x, 1.0 / value);
         }
-        double[] res = new double[queries.length];
-        for(int i = 0; i < queries.length; i++) {
-            if(!map.containsKey(queries[i][0]) || !map.containsKey(queries[i][0])) res[i] = -1.0;
-            else res[i] = dfs(queries[i][0], queries[i][1], new HashSet<String>());
-        }
-        return res;
+        return map;
     }
-    double dfs(String source, String destination, Set<String> visited) {
+
+    private double dfs(String source, String destination, Set<String> visited) {
         if(source.equals(destination)) return 1.0;
         visited.add(source);
         if(!map.containsKey(source)) return -1.0;
