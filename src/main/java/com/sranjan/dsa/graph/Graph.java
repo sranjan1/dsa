@@ -1,7 +1,5 @@
 package com.sranjan.dsa.graph;
 
-import com.sranjan.dsa.linkedlist.LinkedListNode;
-
 import java.util.*;
 
 public class Graph {
@@ -97,15 +95,15 @@ public class Graph {
     }
 
 
-    public static void bfs(GraphNode<Integer> startNode){
-        Queue<GraphNode<Integer>> queue = new LinkedList<>();
+    public static void bfs(DirectedGraphNode<Integer> startNode){
+        Queue<DirectedGraphNode<Integer>> queue = new LinkedList<>();
         Set<Integer> visited = new HashSet<>();
         queue.add(startNode);
         visited.add(startNode.value);
         while(!queue.isEmpty()) {
-            GraphNode<Integer> currentNode = queue.remove();
+            DirectedGraphNode<Integer> currentNode = queue.remove();
             System.out.println(currentNode.value+" ----------->");
-            for(GraphNode<Integer> node : currentNode.neighbours) {
+            for(DirectedGraphNode<Integer> node : currentNode.neighbours) {
                 if(!visited.contains(node.value)) {
                     visited.add(node.value);
                     queue.add(node);
@@ -115,7 +113,7 @@ public class Graph {
 
     }
 
-    public static void dfs(GraphNode<Integer> startNode) {
+    public static void dfs(DirectedGraphNode<Integer> startNode) {
 
     }
 

@@ -3,16 +3,15 @@ package com.sranjan.dsa.graph;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GraphNode<T> {
+public class DirectedGraphNode<T> {
     T value;
-    List<GraphNode<T>> neighbours;
+    List<DirectedGraphNode<T>> neighbours;
 
-    public GraphNode(T value) {
+    public DirectedGraphNode(T value) {
         this.value = value;
         this.neighbours = new ArrayList<>();
     }
-    public void addEdge(GraphNode<T> to) {
+    public void addEdge(DirectedGraphNode<T> to) {
         this.neighbours.add(to);
-        to.neighbours.add(this);
     }
 }
