@@ -16,21 +16,21 @@ public class EvaluateDivisionUsingDfs {
     }
     private Map<String, Map<String, Double>> buildGraph(List<List<String>> equations, double[] values) {
         for(int i = 0; i < equations.size(); i++) {
-            String x = equations.get(i).get(0);
-            String y = equations.get(i).get(1);
+            String source = equations.get(i).get(0);
+            String destination = equations.get(i).get(1);
             double value = values[i];
-            map.putIfAbsent(x, new HashMap<String, Double>());
-            map.putIfAbsent(y, new HashMap<String, Double>());
-            map.get(x).put(y, value);
-            map.get(y).put(x, 1.0 / value);
+            map.putIfAbsent(source, new HashMap<String, Double>());
+            map.putIfAbsent(destination, new HashMap<String, Double>());
+            map.get(source).put(destination, value);
+            map.get(destination).put(source, 1.0 / value);
         }
         return map;
     }
 
     private double dfs(String source, String destination, Set<String> visited) {
         if(source.equals(destination)) return 1.0;
-        visited.add(source);
         if(!map.containsKey(source)) return -1.0;
+        visited.add(source);
         for(String neighbor : map.get(source).keySet()) {
             if(visited.contains(neighbor)) continue;
             double t = dfs(neighbor, destination, visited);
